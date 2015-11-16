@@ -120,10 +120,12 @@ setTimeout(function () {
     var ev = document.createEvent("MouseEvents");
     ev.initEvent("click", true, true);
     var button = document.querySelector("button#button");
-    var buttonTxt = button.textContent || button.innerText;
-    if( buttonTxt === 'Nutzungsbedingungen akzeptieren' && button.getAttribute('value') === 'LogIn') {
-      console.log("------------> CLICK <------------\n\n");
-      button.dispatchEvent(ev);
+    if (button !== null) {
+      var buttonTxt = button.textContent || button.innerText;
+      if (buttonTxt === 'Nutzungsbedingungen akzeptieren' && button.getAttribute('value') === 'LogIn') {
+        console.log("------------> CLICK <------------\n\n");
+        button.dispatchEvent(ev);
+      }
     }
   });
 }, 2000);

@@ -1,14 +1,23 @@
 #!/bin/bash
+# nm sets this values
+INTERFACE=$IFACE
 
-. ~/.nvm/nvm.sh
+USER=andi
 
-nvm use v0.10.31
+TIMESTAMP=`date`
+echo "$TIMESTAMP called: WIFI-autologin $INTERFACE $ACTION" >> /home/andi/wifi.log
 
+SSID="WIFI-PUBLIC"
+ESSID=`iwconfig $INTERFACE | grep $SSID | cut -d":" -f2 | sed 's/^[^"]*"\|"[^"]*$//g'`
 
-SSID=`nmcli dev wifi | grep -e 'ja' | cut -d\' -f2`
-
-[ "$SSID" == "WIFI-PUBLIC" ] || exit 0
-
-echo run >> /tmp/wifi-public-autologin.log
-
-phantomjs src/app.js
+if [ "$INTERFACE" == "wlan0" ]; then
+  echo "wlan0 came up" >> /home/andi/wifi.log
+  if [ "$SSID" == "$ESSID" ]; then
+    . /home/${USER}/.nvm/nvm.sh
+    nvm use v0.10.31
+    echo "run login script on WIFI-PUBLIC" >> /home/andi/wifi.log
+    phantomjs src/app.js
+  # else
+    # nothing to do
+  fi
+fi
