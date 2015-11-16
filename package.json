@@ -1,0 +1,22 @@
+{
+  "name": "WIFI-PUBLIC-autologin",
+  "version": "1.0.0",
+  "description": "Auto login script for the Public WIFI Wireless-LAN. Prevents the pollution of the browser history.",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ascheucher/WIFI-PUBLIC-autologin.git"
+  },
+  "author": "Andreas Scheucher <andreas@scheucher.cc>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ascheucher/WIFI-PUBLIC-autologin/issues"
+  },
+  "homepage": "https://github.com/ascheucher/WIFI-PUBLIC-autologin",
+  "dependencies": {
+    "webpage": "^0.3.0"
+  }
+}
