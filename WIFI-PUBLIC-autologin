@@ -1,21 +1,21 @@
 #!/bin/bash
-# nm sets this values
+# /etc/NetworkManager/dispatcher.d/01ifupdown sets this values
 INTERFACE=$IFACE
 
-USER=andi
+USER=your_ubuntu_user_name
 
 TIMESTAMP=`date`
-echo "$TIMESTAMP called: WIFI-autologin $INTERFACE $ACTION" >> /home/andi/wifi.log
+# echo "$TIMESTAMP called: WIFI-autologin $INTERFACE $ACTION" >> /home/${USER}/wifi.log
 
 SSID="WIFI-PUBLIC"
 ESSID=`iwconfig $INTERFACE | grep $SSID | cut -d":" -f2 | sed 's/^[^"]*"\|"[^"]*$//g'`
 
 if [ "$INTERFACE" == "wlan0" ]; then
-  echo "wlan0 came up" >> /home/andi/wifi.log
+  # echo "wlan0 came up" >> /home/${USER}/wifi.log
   if [ "$SSID" == "$ESSID" ]; then
     . /home/${USER}/.nvm/nvm.sh
     nvm use v0.10.31
-    echo "run login script on WIFI-PUBLIC" >> /home/andi/wifi.log
+    # echo "run login script on WIFI-PUBLIC" >> /home/${USER}/wifi.log
     phantomjs src/app.js
   # else
     # nothing to do
