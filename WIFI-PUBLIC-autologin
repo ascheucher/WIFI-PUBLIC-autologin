@@ -9,4 +9,6 @@ SSID=`nmcli dev wifi | grep -e 'ja' | cut -d\' -f2`
 
 [ "$SSID" == "WIFI-PUBLIC" ] || exit 0
 
-node src/app.js
+echo run >> /tmp/wifi-public-autologin.log
+
+phantomjs src/app.js
