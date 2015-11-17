@@ -2,22 +2,23 @@
 # /etc/NetworkManager/dispatcher.d/01ifupdown sets this values
 INTERFACE=$IFACE
 
-USER=your_ubuntu_user_name
+USER=andi
 
 TIMESTAMP=`date`
-# echo "$TIMESTAMP called: WIFI-autologin $INTERFACE $ACTION" >> /home/${USER}/wifi.log
 
-SSID="WIFI-PUBLIC"
-ESSID=`iwconfig $INTERFACE | grep $SSID | cut -d":" -f2 | sed 's/^[^"]*"\|"[^"]*$//g'`
+EXPECTED_SSID="WIFI-PUBLIC"
+SSID=`iwconfig $INTERFACE | grep $EXPECTED_SSID | cut -d":" -f2 | sed 's/^[^"]*"\|"[^"]*$//g'`
+
+logger "WIFI-PUBLIC-autologin: check for wlan interface ($INTERFACE) and SSID ($SSID)."
 
 if [ "$INTERFACE" == "wlan0" ]; then
-  # echo "wlan0 came up" >> /home/${USER}/wifi.log
-  if [ "$SSID" == "$ESSID" ]; then
+  logger "WIFI-PUBLIC-autologin: detected $SSID"
+  if [ "$SSID" == "$EXPECTED_SSID" ]; then
     . /home/${USER}/.nvm/nvm.sh
     nvm use v0.10.31
-    # echo "run login script on WIFI-PUBLIC" >> /home/${USER}/wifi.log
+    logger "WIFI-PUBLIC-autologin: run WIFI auto login script on $SSID"
     phantomjs src/app.js
-  # else
-    # nothing to do
+  else
+    logger "WIFI-PUBLIC-autologin: nothing to do on $SSID"
   fi
 fi
