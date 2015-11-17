@@ -55,6 +55,7 @@ Follow this steps:
  * create a symbolic link to the script `ln -s /etc/network/if-up.d/WIFI-PUBLIC-autologin {CHECK_OUT_DIR}/WIFI-PUBLIC-autologin`. 
  Replace {CHECK_OUT_DIR} with the directory this README is located.
  
-If you want to ensure everthings works fine, uncomment the commented out `echo ... >> /home/${USER}/wifi.log` code lines.
-You shall find log messages on connecting to a WIFI in the /home/${USER}/wifi.log file. After assuring it works, comment 
-out the echo lines again. 
+## Debugging
+
+To see, what's going on on the phantomjs client, set `export DEBUG=debug` before starting. This will allow you to
+ open the debugger on http://localhost:9000 and see the log statements in the browser console.

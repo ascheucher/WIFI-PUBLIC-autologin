@@ -1,8 +1,14 @@
 var sys = require("system"),
   page = require("webpage").create(),
-  logResources = false,
-  step1url = "http://en.wikipedia.org/wiki/DOM_events",
-  step2url = "http://en.wikipedia.org/wiki/DOM_events#Event_flow";
+  logResources = false;
+
+//var SysLogger = require('ain2');
+//var console = new SysLogger({tag: 'node-test-app', facility: 'syslog'});
+//var console = new SysLogger();
+
+//console.log('notice: %d', Date.now());
+//console.info('info');
+//console.error('error');
 
 if (sys.args.length > 1 && sys.args[1] === "-v") {
   logResources = true;
@@ -81,34 +87,15 @@ page.onPrompt = function () {
   printArgs.apply(this, arguments);
 };
 
-//
-//page.open('https://wifi-ise-01.stmk.wifi.at:8443/portal/PortalSetup.action?portal=535b90d0-3461-11e5-b975-00505693633b&sessionId=ac100105000521c956444fd1&action=cwa',
-//  function (status) {
-//    if (status !== 'success') {
-//      console.log('Unable to access network');
-//    } else {
-//      console.log('loaded login page');
-//      if (status !== 'success') {
-//        console.log('Unable to access network');
-//      } else {
-//        console.log('get button');
-//        console.log('Located Button with text: ' & page.evaluate(function() {
-//          return document.getElementById('button').textContent;
-//        }));
-//
-//        page.evaluate( function() {document.getElementById('button').click()});
-//
-//      }
-//    }
-//    phantom.exit();
-//  });
-
+// ######################################################################
 
 setTimeout(function () {
-//  var url = 'https://wifi-ise-01.stmk.wifi.at:8443/portal/PortalSetup.action?portal=535b90d0-3461-11e5-b975-00505693633b&sessionId=ac100105000521c956444fd1&action=cwa';
+//  var url = 'https://wifi-ise-01.stmk.wifi.at:8443/portal/PortalSetup.action?' +
+//    'portal=535b90d0-3461-11e5-b975-00505693633b&sessionId=ac100105000521c956444fd1&action=cwa';
   var url = 'http://www.orf.at';
   console.log("");
   console.log("### STEP 1: Load '" + url + "'");
+  console.log('logger "WIFI-PUBLIC-autologin: open ' & url & '"');
   page.open(url);
 }, 0);
 
@@ -123,9 +110,13 @@ setTimeout(function () {
     if (button !== null) {
       var buttonTxt = button.textContent || button.innerText;
       if (buttonTxt === 'Nutzungsbedingungen akzeptieren' && button.getAttribute('value') === 'LogIn') {
-        console.log("------------> CLICK <------------\n\n");
+        console.log('WIFI-PUBLIC-autologin: CLICK THE LOGIN BUTTON.');
         button.dispatchEvent(ev);
+      } else {
+        console.log('WIFI-PUBLIC-autologin: no LOGIN button detected. nothing to do.');
       }
+    } else {
+      console.log('WIFI-PUBLIC-autologin: no button detected. nothing to do.');
     }
   });
 }, 2000);
@@ -138,44 +129,3 @@ setTimeout(function () {
     phantom.exit();
   }, 100);
 }, 10000);
-
-//var casper = require('casper').create();
-//
-//casper.options.viewportSize = {width: 1024, height: 768};
-//
-//casper.test.begin("Logging into WIFI Wireless LAN", 1, function logIn(test) {
-//  casper.start('https://wifi-ise-01.stmk.wifi.at:8443/portal/PortalSetup.action?portal=535b90d0-3461-11e5-b975-00505693633b&sessionId=ac100105000521c956444fd1&action=cwa',
-//    function() {
-//      test.assertTitleMatch('WIFI Steiermark Public WLAN');
-//      test.assertExists('button');
-//      test.assertSelectorHasText('button.button#button', 'Nutzungsbedingungen akzeptieren');
-//
-//    }).run(function() {
-//      test.done();
-//    });
-//});
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-//casper.start('https://wifi-ise-01.stmk.wifi.at:8443/portal/PortalSetup.action?portal=535b90d0-3461-11e5-b975-00505693633b&sessionId=ac100105000521c956444fd1&action=cwa', function() {
-//  // <button class="button" name="button" id="button" value="LogIn" type="submit">Nutzungsbedingungen akzeptieren</button>
-//  this.echo(this.getTitle());
-//  this.echo(this.getHTML());
-////  casper.assertExists('button.button#button');
-//  casper.assertExists('button');
-//  casper.assertSelectorHasText('button.button#button', 'Nutzungsbedingungen akzeptieren');
-//  this.click('button.button#button');
-//});
-//
-//casper.then(function() {
-//  console.log('clicked ok, new location is ' + this.getCurrentUrl());
-//});
-//
-//casper.run();

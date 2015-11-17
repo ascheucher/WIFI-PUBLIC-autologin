@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/ascheucher/WIFI-PUBLIC-autologin",
   "dependencies": {
+    "ain2": "^1.5.3",
     "system": "^1.0.4",
+    "unix-dgram": "^0.2.2",
     "webpage": "^0.3.0"
   }
 }

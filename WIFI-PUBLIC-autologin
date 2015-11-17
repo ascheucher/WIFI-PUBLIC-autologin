@@ -16,8 +16,13 @@ if [ "$INTERFACE" == "wlan0" ]; then
   if [ "$SSID" == "$EXPECTED_SSID" ]; then
     . /home/${USER}/.nvm/nvm.sh
     nvm use v0.10.31
-    logger "WIFI-PUBLIC-autologin: run WIFI auto login script on $SSID"
-    phantomjs src/app.js
+    if [ "$DEBUG" == "debug" ]; then
+      logger "WIFI-PUBLIC-autologin: run WIFI auto login script on $SSID in DEBUG mode. open http://localhost:9000"
+      phantomjs --remote-debugger-port=9000 src/app.js
+    else
+      logger "WIFI-PUBLIC-autologin: run WIFI auto login script on $SSID"
+      phantomjs src/app.js
+    fi
   else
     logger "WIFI-PUBLIC-autologin: nothing to do on $SSID"
   fi
